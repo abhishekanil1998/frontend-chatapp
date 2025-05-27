@@ -1,7 +1,7 @@
 <template>
   <div class="body">
     <div class="loginbox">
-      <h1>Login</h1>
+      <h1>Register</h1>
       <label for="phoneNumber">Phone Number</label>
       <input 
         type="text" 

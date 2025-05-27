@@ -3,7 +3,7 @@
     fill-height
     class="d-flex justify-center align-center min-vh-100"
   >
-    <v-card class="pa-6" elevation="8" max-width="400">
+    <v-card class="pa-6" elevation="8">
       <v-card-title class="text-center text-h5 font-weight-bold">
         Admin Login
       </v-card-title>
@@ -67,5 +67,9 @@ export default {
 <style scoped>
 .min-vh-100 {
   min-height: 100vh;
+}
+
+.pa-6{
+  width: 500px;
 }
 </style>

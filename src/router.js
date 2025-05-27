@@ -14,6 +14,10 @@ history:createWebHistory(),
         {path:'/HomePage',component:()=>import("./components/User/HomePage.vue")},
         {path:'/adminlogin',component:()=>import("./components/Admin/LoginPage.vue")},
         {path:'/admindashboard',component:()=>import("./components/Admin/HomePage.vue")},
+        {path:'/registration',component:()=>import("./components/User/RegistrationForm.vue")},
+                {path:'/loginpage',component:()=>import("./components/User/LoginPage.vue")},
+
+
 
 
 

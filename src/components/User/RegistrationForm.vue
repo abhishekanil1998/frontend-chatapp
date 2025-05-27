@@ -1,88 +1,160 @@
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gradient-to-br from-green-400 to-blue-600 p-4">
-    <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md text-center transition-all duration-300 hover:shadow-3xl">
-      <h2 class="text-3xl font-extrabold mb-6 text-gray-800">ChatApp Registration</h2>
-      <form @submit.prevent="handleRegister" class="space-y-4">
-        <div>
-          <input 
-            type="tel" 
-            v-model="phoneNumber" 
-            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:outline-none transition duration-300" 
-            placeholder="Phone Number" 
+  <div class="register-container">
+    <div class="form-card">
+      <h2 class="form-title">Register</h2>
+      <form @submit.prevent="handleSubmit" class="form">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input
+            id="username"
+            v-model="form.username"
+            type="text"
+            placeholder="Enter username"
             required
           />
         </div>
-        <div class="flex space-x-2">
-          <input 
-            type="text" 
-            v-model="otp" 
-            class="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 focus:outline-none transition duration-300" 
-            placeholder="Enter OTP" 
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input
+            id="name"
+            v-model="form.name"
+            type="text"
+            placeholder="Enter full name"
             required
           />
-          <button 
-            type="button" 
-            @click="sendOtp" 
-            class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-lg font-bold hover:shadow-lg hover:opacity-90 transition-transform transform hover:scale-105">
-            Send OTP
-          </button>
         </div>
-        <button 
-          type="submit" 
-          class="w-full bg-gradient-to-r from-green-500 to-blue-500 text-white p-3 rounded-lg text-lg font-bold hover:shadow-xl hover:opacity-90 transition-transform transform hover:scale-105">
-          Register
-        </button>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            v-model="form.password"
+            type="text"
+            placeholder="Enter password"
+            required
+          />
+        </div>
+        <button type="submit" class="continue-btn">Continue</button>
       </form>
-      <p v-if="errorMessage" class="text-red-500 text-sm mt-4 animate-bounce">{{ errorMessage }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 export default {
   data() {
     return {
-      fullName: '',
-      phoneNumber: '',
-      otp: '',
-      otpSend: false,
-      errorMessage: '',
-    };
-  },
-  computed: {
-    ...mapGetters(['getSessionId']),
-    sessionId() {
-      return this.getSessionId;
+      form: {
+        username: '',
+        name: '',
+        password: '',
+        sessionId: ''
+      }
     }
+  },
+  created() {
+    this.form.sessionId = this.$route.query.session || ''
   },
   methods: {
-    async sendOtp() {
-      try {
-        const response = await this.$store.dispatch('login', JSON.stringify({ phoneNumber: this.phoneNumber }));
-        if (response) {
-          this.otpSend = true;
-        }
-      } catch (error) {
-        this.errorMessage = 'Failed';
-      }
-    },
-    
-    handleRegister() {
-      if (this.fullName && this.phoneNumber && this.otp) {
-        alert('Registration successful!');
-      } else {
-        this.errorMessage = 'Please fill all fields correctly';
-      }
-    }
+   async handleSubmit() {
+  if (!this.form.sessionId) {
+    alert('Session ID is missing. Please verify your phone via OTP before registering.')
+    return
   }
-};
-</script>
 
+  const { sessionId, ...userData } = this.form; // 🔥 Extract sessionId separately
+
+  try {
+    const response = await this.$store.dispatch('register', { sessionId, ...userData }) // 🔥 Send separately
+    if (response) {
+      this.$router.push('/HomePage')
+    } else {
+      throw new Error('Registration failed')
+    }
+  } catch (error) {
+    console.error('Registration error:', error.message)
+    alert('Registration failed: ' + error.message)
+  }
+}
+
+  }
+}
+</script>
 <style scoped>
-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f3f4f6;
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+}
+
+.form-card {
+  background-color: #ffffff;
+  padding: 2.5rem 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+  transition: transform 0.3s ease;
+}
+
+.form-card:hover {
+  transform: translateY(-2px);
+}
+
+.form-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #444;
+}
+
+.form-group input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.continue-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.continue-btn:hover {
+  background-color: #0056b3;
 }
 </style>
+

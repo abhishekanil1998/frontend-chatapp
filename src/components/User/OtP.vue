@@ -71,7 +71,7 @@ export default {
       try {
         const response = await this.$store.dispatch("verify", payload);
         if (response) {
-          this.$router.push("/HomePage");
+          this.$router.push(`/registration?session=${this.sessionId}`);
         } else {
           throw new Error("Invalid OTP");
         }
