@@ -33,7 +33,7 @@
           <router-link to="/login"><v-btn color="blue darken-1" large class="white--text">Get Started</v-btn></router-link>
         </div>
         <div class="text-center mt-6">
-          <router-link to="/loginpage"><v-btn color="blue darken-1" large class="white--text">Login</v-btn></router-link>
+          <router-link to="/loginpage">Alredy a User?Login</router-link>
         </div>
       </v-card>
     </v-container>

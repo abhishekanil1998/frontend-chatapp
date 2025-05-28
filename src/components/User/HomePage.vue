@@ -1,7 +1,7 @@
 <template>
   <v-container class="fill-height d-flex flex-column">
     <v-app-bar app color="blue darken-2" dark>
-      <v-toolbar-title>Chatapp</v-toolbar-title>
+      <v-toolbar-title class="title"><h3>Chatapp</h3></v-toolbar-title>
       <v-spacer> </v-spacer>
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
@@ -14,8 +14,17 @@
         <v-icon>mdi-account</v-icon>
         <span class="text-caption mt-1">Profile</span>
       </v-btn>
-    </v-app-bar>
 
+       <v-btn
+        class="d-flex flex-column align-center"
+        @click="logout"
+        plain
+      >
+        <v-icon>mdi-logout</v-icon>
+        <span class="text-caption mt-1">logout</span>
+      </v-btn>
+    </v-app-bar>
+    <h2>Hi {{ name }} </h2>
     <v-container fluid class="d-flex">
       <v-navigation-drawer app permanent>
         <v-list>
@@ -103,6 +112,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: "ChatPage",
   data() {
@@ -111,18 +122,23 @@ export default {
       userList: [],
       selectedChat: null,
       messageText: "",
-      searchQuery: "", // ✅ Add this
+      searchQuery: "",
+      name:"", 
     };
   },
   created() {
     // Set your logged-in user ID
-    this.userId = 1;
+    this.userId = this.getuserId;
     this.loadUserList(); // Load available users
+  },
+   computed: {
+    ...mapGetters(['getuserId']),  
   },
   methods: {
     async loadUserList() {
       try {
-        const response = await this.$store.dispatch("fetchfriends", 1); // Create this action in Vuex
+        const userId =this.getuserId;
+        const response = await this.$store.dispatch("fetchfriends", userId); 
         if (response.success) {
           this.userList = response.data.filter(
             (user) => user.userId !== this.userId
@@ -209,12 +225,28 @@ export default {
         this.userList = [];
       }
     },
+    async profile() {
+        try {
+        const userId =this.getuserId;
+          const response = await this.$store.dispatch('profile', userId);
+          this.name = response.data.name;
+        } catch (error) {
+          console.error("Profile load failed:", error);
+        }
+      },
+    logout() {
+    this.$store.commit("logout");
+    this.$router.push("/loginPage");
+  },
   },
   watch: {
     searchQuery() {
       this.searchUsers();
     },
   },
+  mounted(){
+    this.profile();
+  }
 };
 </script>
 
@@ -222,5 +254,16 @@ export default {
 .chat-window {
   max-height: 400px;
   overflow-y: auto;
+}
+.title{
+  margin: 90px;
+  text-align: left;
+}
+.search{
+  width: 150px;
+  font-size: large;
+  border: 1px solid rgb(76, 76, 76);
+  border-radius: 25px;
+  padding: 5px 15px;
 }
 </style>

@@ -36,6 +36,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
@@ -46,10 +47,17 @@ export default {
       }
     };
   },
+   created() {
+    // Set your logged-in user ID
+    this.userId = this.getuserId;
+  },
+     computed: {
+    ...mapGetters(['getuserId']),  
+  },
   methods: {
     async profile() {
       try {
-        const userId = 3;
+        const userId = this.getuserId;
         const response = await this.$store.dispatch('profile', userId);
         this.user = response.data;
       } catch (error) {

@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -64,9 +65,18 @@ export default {
   const { sessionId, ...userData } = this.form; // 🔥 Extract sessionId separately
 
   try {
-    const response = await this.$store.dispatch('register', { sessionId, ...userData }) // 🔥 Send separately
+const response = await axios.post(
+  `http://localhost:8088/Userdetails/signup?sessionId=${sessionId}`,
+  userData, // Only user model data goes in the body
+  {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }
+);
+ // 🔥 Send separately
     if (response) {
-      this.$router.push('/HomePage')
+      this.$router.push('/loginPage')
     } else {
       throw new Error('Registration failed')
     }

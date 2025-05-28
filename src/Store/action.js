@@ -30,30 +30,19 @@ export default {
     }
   },
 
-  async loginPage({  rootGetters }, payload) {
-    try {
-     
-
-      const response = await axios.post(
-        `${rootGetters.geturl}/api/Userdetails/login`,
-        payload,
-        {
-          headers: { "Content-Type": "application/json" },
+  async loginPage({ commit, rootGetters }, payload) {
+   
+      const response = await axios.post(`${rootGetters.geturl}/Userdetails/login`, payload);
+        if (response.status >= 200 && response.status < 300) {
+          console.log(response);
+          commit('setuserId', response.data.userId); 
+          return true;
+        } else {
+          console.error("Login failed");
+          return false;
         }
-      );
-
-      console.log("Response received:", response);
-
-      if (response.status >= 200 && response.status < 300) {
-        // commit("setSessionId", response.data.sessionId);
-        return true;
-      }
-      return false;
-    } catch (error) {
-      console.error("Error sending OTP:", error);
-      return false;
-    }
-  },
+      
+    },
 
   async register({ rootGetters }, payload) {
     try {

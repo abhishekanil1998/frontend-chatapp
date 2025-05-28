@@ -7,7 +7,7 @@
           <label for="phone">Phone Number</label>
           <input
             id="phone"
-            v-model="form.mobile"
+            v-model="mobile"
             type="tel"
             placeholder="Enter phone number"
             required
@@ -17,7 +17,7 @@
           <label for="password">Password</label>
           <input
             id="password"
-            v-model="form.password"
+            v-model="password"
             type="password"
             placeholder="Enter password"
             required
@@ -34,24 +34,28 @@ export default {
   name: "LoginPage",
   data() {
     return {
-      form: {
+     
         mobile: '',
         password: ''
-      }
+      
     }
   },
   methods: {
     async handleLogin() {
-      if (!this.form.mobile || !this.form.password) {
+      if (!this.mobile || !this.password) {
         alert("Please fill in all fields");
         return;
       }
 
       try {
+        const payload = {
+          mobile: this.mobile,
+          password: this.password,
+        };
         // Replace with actual Vuex or API login call
-        const success = await this.$store.dispatch('loginPage', this.form);
+         const response = await this.$store.dispatch('loginPage',payload)
 
-        if (success) {
+        if (response) {
           this.$router.push('/HomePage');
         } else {
           alert('Login failed. Please check your credentials.');

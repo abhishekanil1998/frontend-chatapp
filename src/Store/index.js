@@ -7,7 +7,12 @@ const store = createStore({
     state() {
         return {
             base_url: 'http://localhost:8088',
-            sessionId: sessionStorage.getItem('sessionId') || ''
+            sessionId: sessionStorage.getItem('sessionId') || '',
+            auth: {  // Ensure auth object is initialized
+       userId: Number(sessionStorage.getItem("userId")) || null,
+       
+       
+      },
         };
     },
     mutations: rootMutations, // ✅ Changed from mutation → mutations
