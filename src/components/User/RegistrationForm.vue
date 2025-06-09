@@ -95,35 +95,38 @@ const response = await axios.post(
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(to right, #e0eafc, #cfdef3);
+  background: linear-gradient(120deg, #e0eafc, #fdfbfb);
+  padding: 20px;
 }
 
 .form-card {
-  background-color: #ffffff;
-  padding: 2.5rem 2rem;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  padding: 2.5rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
   width: 100%;
-  max-width: 420px;
-  transition: transform 0.3s ease;
+  max-width: 440px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
 }
 
 .form-title {
-  text-align: center;
   font-size: 2rem;
-  margin-bottom: 2rem;
+  text-align: center;
   font-weight: 600;
-  color: #333;
+  color: #2e3a59;
+  margin-bottom: 1.5rem;
+  font-family: 'Poppins', sans-serif;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .form-group {
@@ -132,39 +135,46 @@ const response = await axios.post(
 }
 
 .form-group label {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   font-weight: 500;
-  color: #444;
+  font-size: 0.95rem;
+  color: #34495e;
+  width: 100%;
+  text-align: start;
 }
 
 .form-group input {
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid #ccd6dd;
+  border-radius: 12px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
-  outline: none;
+  background-color: #f9f9f9;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  border-color: #1e88e5;
+  background-color: #fff;
+  box-shadow: 0 0 6px rgba(30, 136, 229, 0.2);
+  outline: none;
 }
 
 .continue-btn {
-  background-color: #007bff;
-  color: #fff;
+  background: linear-gradient(to right, #1e88e5, #42a5f5);
+  color: #ffffff;
   padding: 0.9rem;
   border: none;
-  border-radius: 10px;
+  border-radius: 30px;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
+  width: 100%;
 }
 
 .continue-btn:hover {
-  background-color: #0056b3;
+  background: linear-gradient(to right, #1565c0, #1e88e5);
 }
+
 </style>
 

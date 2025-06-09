@@ -182,6 +182,47 @@ export default {
     }
   },
 
+
+  async sendImage({ rootGetters }, formData) {
+  try {
+    const response = await axios.post(
+      `${rootGetters.geturl}/api/message/upload/image`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.response?.data || "Failed to send message.",
+    };
+  }
+}
+
+,
+
+   // View messages between sender and receiver
+  async fetchImages({ rootGetters }, { senderId, receiverId }) {
+    try {
+      const response = await axios.get(
+        `${rootGetters.geturl}/api/message/viewImages`,
+        {
+          params: { senderId, receiverId },
+        }
+      );
+      return { success: true, data: response.data };
+    } catch (error) {
+      return {
+        success: false,
+        error: error.response?.data?.message || "Failed to fetch messages.",
+      };
+    }
+  },
+
   // View messages between sender and receiver
   async fetchMessages({ rootGetters }, { senderId, receiverId }) {
     try {

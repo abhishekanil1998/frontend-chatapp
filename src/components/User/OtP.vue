@@ -98,9 +98,69 @@ export default {
 </script>
 
 <style scoped>
-.v-card {
-  width: 350px;
-  border-radius: 12px;
-  text-align: center;
+.v-container {
+  background: linear-gradient(to right, #e3f2fd, #fce4ec);
 }
+
+.v-card {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+}
+
+.v-card-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 22px;
+  margin-bottom: 12px;
+  color: #2e3a59;
+}
+
+.v-text-field input {
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+
+.v-text-field {
+  background-color: #fafafa;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.v-text-field:hover,
+.v-text-field:focus-within {
+  box-shadow: 0 0 8px rgba(33, 150, 243, 0.3);
+}
+
+.v-card-actions,
+.v-btn {
+  margin-top: 16px;
+}
+
+.v-btn {
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: 30px;
+  text-transform: none;
+  padding: 12px 0;
+}
+
+.v-btn[color="primary"] {
+  background-color: #1976d2;
+}
+
+.v-btn[color="primary"]:hover {
+  background-color: #1565c0;
+}
+
+.v-btn[color="blue"] {
+  background-color: #42a5f5;
+  color: white;
+}
+
+.v-btn[color="blue"]:hover {
+  background-color: #1e88e5;
+}
+
 </style>

@@ -67,9 +67,52 @@ export default {
 <style scoped>
 .min-vh-100 {
   min-height: 100vh;
+  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+  font-family: 'Poppins', sans-serif;
 }
 
-.pa-6{
-  width: 500px;
+.pa-6 {
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+  transition: box-shadow 0.3s ease;
 }
+
+.pa-6:hover {
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+}
+
+.v-card-title {
+  font-size: 1.5rem;
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.v-card-text {
+  padding-top: 0;
+}
+
+.v-text-field input {
+  border-radius: 8px !important;
+  background-color: #f9f9f9 !important;
+}
+
+.v-text-field input:focus {
+  box-shadow: 0 0 6px rgba(33, 150, 243, 0.25);
+}
+
+.v-btn {
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 30px;
+  padding: 12px 0;
+  transition: background 0.3s ease;
+}
+
+.v-btn:hover {
+  background-color: #1565c0 !important;
+}
+
 </style>

@@ -57,73 +57,87 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #ffffff;
+  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+  font-family: 'Poppins', sans-serif;
+  padding: 16px;
 }
 
 .loginbox {
-  width: 400px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  background-color: #0e3e87;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.loginbox:hover {
+  transform: translateY(-4px);
 }
 
 h1 {
-  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #2e3a59;
+  margin-bottom: 1.5rem;
 }
 
 label {
-  width: 100%;
-  text-align: start;
-  margin-bottom: 10px;
+  display: block;
+  text-align: left;
+  color: #34495e;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
 }
 
 input {
   width: 100%;
-  border-radius: 4px;
-  border: none;
-  padding: 10px;
-  margin-bottom: 20px;
-  background-color: #ababab;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 1.5rem;
 }
 
 input:focus {
-  border-color: #6366f1;
-  box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+  border-color: #1e88e5;
+  box-shadow: 0 0 6px rgba(30, 136, 229, 0.3);
+  background-color: #fff;
   outline: none;
 }
 
 #otpbtn {
   width: 100%;
-  background: linear-gradient(to right, #0f0f10, #a855f7);
+  background: linear-gradient(to right, #1e88e5, #42a5f5);
   color: white;
   padding: 14px;
-  border-radius: 10px;
-  font-size: 18px;
-  font-weight: bold;
-  transition: transform 0.3s ease-in-out;
-  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 30px;
   border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
 #otpbtn:hover {
-  transform: scale(1.05);
+  background: linear-gradient(to right, #1565c0, #1e88e5);
+  transform: scale(1.03);
 }
 
 .error-message {
-  color: red;
-  text-align: center;
+  color: #e53935;
   font-size: 14px;
   margin-top: 10px;
-  animation: bounce 0.5s;
+  animation: fadeIn 0.4s ease-in-out;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
+
 </style>

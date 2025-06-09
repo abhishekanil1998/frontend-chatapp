@@ -150,5 +150,101 @@ export default {
 <style scoped>
 .v-application {
   font-family: 'Roboto', sans-serif;
+  background-color: #f5f7fa;
+  color: #2e3a59;
 }
+
+/* Sidebar Styling */
+.v-navigation-drawer {
+  background: #1e2a38;
+  color: #ffffff;
+  padding-top: 12px;
+}
+
+.v-list-item-title {
+  font-weight: 500;
+}
+
+.v-list-item {
+  border-radius: 8px;
+  margin-bottom: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.v-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.v-list-item--active {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.v-icon {
+  color: #ffffff !important;
+}
+
+/* App Bar */
+.v-app-bar {
+  box-shadow: none;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Dashboard Cards */
+.v-card {
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  background-color: #ffffff;
+  transition: box-shadow 0.2s ease;
+}
+
+.v-card:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.v-card-title {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.v-card-text {
+  color: #4b5563;
+}
+
+/* Table Style */
+.v-simple-table {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.v-simple-table thead {
+  background-color: #f1f5f9;
+}
+
+.v-simple-table th {
+  font-weight: 600;
+  padding: 16px;
+  color: #374151;
+  text-align: left;
+}
+
+.v-simple-table td {
+  padding: 14px;
+  font-size: 0.95rem;
+  color: #334155;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.v-btn {
+  font-weight: 500;
+  text-transform: none;
+  font-size: 0.9rem;
+}
+
+/* Page Container */
+.v-main {
+  background-color: #f5f7fa;
+}
+
 </style>

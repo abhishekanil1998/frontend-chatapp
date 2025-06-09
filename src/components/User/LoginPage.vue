@@ -109,6 +109,8 @@ export default {
   margin-bottom: 0.5rem;
   font-weight: 500;
   color: #555;
+  width: 100%;
+  text-align: start;
 }
 
 .form-group input {
