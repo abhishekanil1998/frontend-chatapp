@@ -1,135 +1,120 @@
 <template>
-  <v-container class="fill-height d-flex flex-column" id="container">
-    <v-app-bar app color="blue darken-2" dark >
-      <v-toolbar-title class="title"><h3>Chatapp</h3></v-toolbar-title>
-      <v-spacer><h2>Hi {{ name }}</h2></v-spacer>
+  <v-container fluid class="fill-height pa-0">
+    <v-app-bar app color="indigo darken-3" dark dense>
+      <v-toolbar-title class="text-h5">Zink</v-toolbar-title>
+      <v-spacer />
+      <span class="mr-4">Hi, {{ name }}</span>
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
-      <v-btn
-        class="d-flex flex-column align-center"
-        @click="$router.push('/profile')"
-        plain
-      >
+      <v-btn icon @click="$router.push('/profile')">
         <v-icon>mdi-account</v-icon>
-        <span class="text-caption mt-1">Profile</span>
       </v-btn>
-      <v-btn class="d-flex flex-column align-center" @click="logout" plain>
+      <v-btn icon @click="logout">
         <v-icon>mdi-logout</v-icon>
-        <span class="text-caption mt-1">logout</span>
       </v-btn>
     </v-app-bar>
-    <v-container fluid class="d-flex">
-      <v-navigation-drawer app permanent>
-        <v-list>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title class="text-h6"
-                ><input
-                  type="text"
-                  name="search"
-                  v-model="searchQuery"
-                  @input="searchUsers"
-                  class="search"
-                  placeholder="Search Users "
-                />
-                <v-icon large color="black" class="searchicon" size="35px"
-                  >mdi-magnify</v-icon
-                ></v-list-item-title
-              >
-            </v-list-item-content>
-          </v-list-item>
-          <v-divider></v-divider>
-          <v-list-item
+
+    <v-row class="fill-height ma-0">
+      <v-col cols="3" class="grey lighten-4 pa-4">
+        <v-text-field
+          v-model="searchQuery"
+          label="Search Users"
+          prepend-inner-icon="mdi-magnify"
+          dense
+          outlined
+          hide-details
+          class="mb-4"
+        />
+
+        <v-list dense>
+          <v-list-item id="friends"
             v-for="(user, index) in userList"
             :key="index"
             link
-            @click="selectUser(user)" class="user"
+            @click="selectUser(user)"
           >
             <v-list-item-avatar>
-              <v-img
-                :src="user.avatar || 'https://via.placeholder.com/40'"
-              ></v-img>
+              <v-img :src="user.avatar || 'https://via.placeholder.com/40'" />
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title>{{ user.name }}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
-      </v-navigation-drawer>
-
-     <v-main class="pa-4">
-  <v-card v-if="selectedChat" class="fill-height d-flex flex-column">
-    <v-card-title>{{ selectedChat.name }}</v-card-title>
-    <v-divider></v-divider>
-
-    <!-- Chat Messages Container -->
-    <v-container class="chat-window flex-grow-1 overflow-y-auto">
-      <div
-        v-for="(message, index) in selectedChat.messages"
-        :key="index"
-        :class="['message-row', message.sender === 'me' ? 'sent' : 'received']"
-      >
-        <!-- Chat Bubble -->
-        <div class="chat-bubble">
-          <div v-if="message.text" class="chat-text">
-            {{ message.text }}
-          </div>
-          <img
-            v-if="message.image"
-            :src="'data:image/jpeg;base64,' + message.image"
-            class="chat-image"
-          />
-          <div class="chat-time">
-            {{ new Date(message.time).toLocaleTimeString() }}
-          </div>
-        </div>
-      </div>
-    </v-container>
-
-    <v-divider></v-divider>
-
-    <!-- Message Input Area -->
-    <v-row class="pa-2 align-center">
-      <v-col cols="2">
-      <v-file-input
-  v-model="photo"
-  label="Upload Image"
-  accept="image/*"
-  prepend-icon="mdi-upload"
-  class="custom-file-input"
-  hide-details
-  dense
-  outlined
-  show-size
-  truncate-length="15"
-/>
-
-
       </v-col>
 
-      <v-col cols="10">
-        <v-text-field
-          v-model="messageText"
-          label="Type a message"
-          append-icon="mdi-send"
-          @click:append="sendMessage(); sendImage();"
-          @keyup.enter="sendMessage"
-          dense
-          hide-details
-        />
+      <!-- Chat Area -->
+      <v-col cols="9" class="pa-4">
+        <v-card v-if="selectedChat" class="fill-height d-flex flex-column">
+          <v-card-title class="blue--text text--darken-2">
+            {{ selectedChat.name }}
+          </v-card-title>
+          <v-divider />
+
+          <!-- Messages -->
+          <v-card-text class="chat-window flex-grow-1">
+            <div
+              v-for="(message, index) in selectedChat.messages"
+              :key="index"
+              :class="['message-row', message.sender === 'me' ? 'sent' : 'received']"
+            >
+              <div class="chat-bubble">
+                <div v-if="message.text" class="chat-text">
+                  {{ message.text }}
+                </div>
+                <img
+                  v-if="message.image"
+                  :src="'data:image/jpeg;base64,' + message.image"
+                  class="chat-image"
+                />
+                <div class="chat-time">
+                  {{ new Date(message.time).toLocaleTimeString() }}
+                </div>
+              </div>
+            </div>
+          </v-card-text>
+
+          <v-divider />
+
+          <!-- Input Area -->
+          <v-card-actions>
+            <v-row no-gutters class="align-center w-100">
+              <v-col cols="3">
+                <v-file-input
+                  v-model="photo"
+                  accept="image/*"
+                  prepend-icon="mdi-image"
+                  dense
+                  outlined
+                  hide-details
+                  label="Image"
+                />
+              </v-col>
+              <v-col cols="9">
+                <v-text-field
+                  v-model="messageText"
+                  label="Type a message"
+                  append-icon="mdi-send"
+                  @click:append="sendMessage(); sendImage();"
+                  @keyup.enter="sendMessage"
+                  dense
+                  outlined
+                  hide-details
+                />
+              </v-col>
+            </v-row>
+          </v-card-actions>
+        </v-card>
+
+        <v-card v-else class="fill-height d-flex align-center justify-center">
+          <v-card-title>Select a user to start messaging</v-card-title>
+        </v-card>
       </v-col>
     </v-row>
-  </v-card>
-
-  <v-card v-else class="fill-height d-flex align-center justify-center">
-    <v-card-title>Select a user to start messaging</v-card-title>
-  </v-card>
-</v-main>
-
-    </v-container>
   </v-container>
 </template>
+
 
 <script>
 import { mapGetters } from "vuex";
@@ -156,13 +141,13 @@ export default {
   },
   methods: {
     scrollToBottom() {
-  this.$nextTick(() => {
-    const container = this.$el.querySelector('.chat-window');
-    if (container) {
-      container.scrollTop = container.scrollHeight;
-    }
-  });
-},
+      this.$nextTick(() => {
+        const container = this.$el.querySelector(".chat-window");
+        if (container) {
+          container.scrollTop = container.scrollHeight;
+        }
+      });
+    },
     async loadUserList() {
       try {
         const userId = this.getuserId;
@@ -202,7 +187,7 @@ export default {
             text: this.messageText.trim(),
             time: new Date().toISOString(),
           });
-this.scrollToBottom();
+          this.scrollToBottom();
           this.messageText = "";
         } else {
           alert("Failed to send message: " + response.error);
@@ -226,7 +211,7 @@ this.scrollToBottom();
           image: msg.image || null,
           time: msg.time,
         }));
-this.scrollToBottom();
+        this.scrollToBottom();
       } else {
         alert("Failed to load messages: " + response.error);
       }
@@ -250,8 +235,8 @@ this.scrollToBottom();
             image: this.photo ? URL.createObjectURL(this.photo) : null,
             time: new Date().toISOString(),
           });
-await this.loadMessages();
-this.scrollToBottom();
+          await this.loadMessages();
+          this.scrollToBottom();
           this.messageText = "";
           this.photo = null;
         } else {
@@ -310,36 +295,21 @@ this.scrollToBottom();
 
 <style scoped>
 .chat-window {
-  max-height: 300px;
   overflow-y: auto;
+  background-color: #f9f9f9;
+  padding: 12px;
+  height: 100px;
 }
-.title {
-  /* margin: 90px; */
-  text-align: left;
+.text-h5{
+  text-align: start;
 }
-.user{
-  border-bottom: 1px solid rgba(0, 0, 0, 0.58);
+#friends{
+  border-bottom: 1px solid rgb(133, 133, 133);
+  background-color: rgb(219, 219, 221);
 }
-.search {
-  width: 150px;
-  font-size: large;
-  border: 1px solid rgb(76, 76, 76);
-  border-radius: 25px;
-  padding: 5px 15px;
-}
-.message-image {
-  max-width: 300px;
-}
-.chat-window {
-  max-height: 70vh;
-  overflow-y: auto;
-  padding: 10px;
-  background-color: #f5f5f5;
-}
-
 .message-row {
   display: flex;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .message-row.sent {
@@ -351,24 +321,16 @@ this.scrollToBottom();
 }
 
 .chat-bubble {
-  background-color: #e0f7fa;
-  padding: 10px 15px;
-  border-radius: 12px;
+  background-color: #e3f2fd;
+  padding: 10px 14px;
+  border-radius: 10px;
   max-width: 60%;
   word-wrap: break-word;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  position: relative;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 
 .message-row.sent .chat-bubble {
-  background-color: #bbdefb;
-  align-self: flex-end;
-}
-
-.chat-image {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-top: 5px;
+  background-color: #c8e6c9;
 }
 
 .chat-text {
@@ -377,37 +339,16 @@ this.scrollToBottom();
 
 .chat-time {
   font-size: 0.7rem;
-  color: gray;
   text-align: right;
-  margin-top: 4px;
+  margin-top: 5px;
+  color: #888;
 }
 
-.custom-file-input {
-  max-width: 250px;
-  background-color: #f1f1f1;
-  border-radius: 10px;
-  padding: 4px 10px;
-  transition: box-shadow 0.2s;
+.chat-image {
+  max-width: 100%;
+  margin-top: 5px;
+  border-radius: 6px;
 }
-
-.custom-file-input:hover {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-}
-
-.custom-file-input input {
-  cursor: pointer;
-}
-
-.v-input__control {
-  min-height: 40px;
-}
-
-
-.v-input__slot {
-  padding: 0 8px;
-}
-
-
 
 
 </style>
